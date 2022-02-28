@@ -4,6 +4,7 @@ import com.codeborne.pdftest.PDF;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.xlstest.XLS;
 import com.opencsv.CSVReader;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -29,13 +30,13 @@ public class FileParsingTest {
         assertThat(parsed.author).contains("Marc Philipp");
     }
 
-  @Test
+    @Test
     void parseXlsTest() throws Exception {
-       try (InputStream stream = cl.getResourceAsStream("files/0303.xlsx")) {
+        try (InputStream stream = cl.getResourceAsStream("files/0303.xlsx")) {
             XLS parsed = new XLS(stream);
-           assertThat(parsed.excel.getSheetAt(0).getRow(1).getCell(0).getStringCellValue())
-                   .isEqualTo("Help");
-       }
+            assertThat(parsed.excel.getSheetAt(0).getRow(1).getCell(0).getStringCellValue())
+                    .isEqualTo("Help");
+        }
     }
 
     @Test
@@ -46,7 +47,7 @@ public class FileParsingTest {
             assertThat(list)
                     .hasSize(1)
                     .contains(
-                            new String[] {"Author", "Book"}
+                            new String[]{"Author", "Book"}
                             //new String[] {"Block", "Apteka"},
                             //new String[] {"Esenin", "Cherniy Chelovek"}
                     );
@@ -64,25 +65,10 @@ public class FileParsingTest {
         }
     }
 
-        @Test
-        void zipTest1() throws Exception {
-            ZipFile zipFile = new ZipFile("files/all files.zip");
-
-            //Проверка pdf
-           /* ZipEntry pdfEntry = zipFile.getEntry("Setter.pdf");
-            try (InputStream stream = zipFile.getInputStream(pdfEntry)) {
-                PDF parsed = new PDF(stream);
-                assertThat(parsed.text).contains("Сеттер");
-            }*/
-
-            // Проверка xls
-            ZipEntry XlsEntry = zipFile.getEntry("0303.xlsx");
-            try (InputStream stream = zipFile.getInputStream(XlsEntry)) {
-                XLS parsed = new XLS(stream);
-                assertThat(parsed.excel.getSheetAt(0).getRow(1).getCell(0).getStringCellValue()).isEqualTo("Help");
-            }
-
-            // Проверка csv
+    @Test
+    void zipTest1() throws Exception {
+        ZipFile zipFile = new ZipFile("/Users/daniiaadiiakova/IdeaProjects/LessonWithFile7/src/test/resources/files/test.zip");
+        // Проверка csv
             ZipEntry csvEntry = zipFile.getEntry("11.csv");
             try (InputStream stream = cl.getResourceAsStream("files/11.csv")) {
                 CSVReader reader = new CSVReader(new InputStreamReader(stream));
@@ -95,11 +81,46 @@ public class FileParsingTest {
                                 //new String[] {"Esenin", "Cherniy Chelovek"}
                         );
             }
-        }
+
 
         //ZipFile zf = new ZipFile(new File(cl.getResource("files/sample-zip-file.zip").toURI()));
 
 
+    }
+
+    @Test
+    void zipTest2() throws Exception {
+        ZipFile zipFile = new ZipFile("/Users/daniiaadiiakova/IdeaProjects/LessonWithFile7/src/test/resources/files/Архив.zip");
+
+        //Проверка pdf
+        ZipEntry pdfEntry = zipFile.getEntry("Setter.pdf");
+        try (InputStream stream = zipFile.getInputStream(pdfEntry)) {
+        PDF parsed = new PDF(stream);
+        assertThat(parsed.text).contains("Сеттер");
+         }
+
+        //Проверка xls
+        ZipEntry XlsEntry = zipFile.getEntry("0303.xlsx");
+        try (InputStream stream = zipFile.getInputStream(XlsEntry)) {
+            XLS parsed = new XLS(stream);
+            assertThat(parsed.excel.getSheetAt(0).getRow(1).getCell(0).getStringCellValue()).isEqualTo("Help");
+        }
+
+        // Проверка csv
+        ZipEntry csvEntry = zipFile.getEntry("11.csv");
+        try (InputStream stream = cl.getResourceAsStream("files/11.csv")) {
+            CSVReader reader = new CSVReader(new InputStreamReader(stream));
+            List<String[]> list = reader.readAll();
+            assertThat(list)
+                    .hasSize(1)
+                    .contains(
+                            new String[] {"Author", "Book"}
+                            //new String[] {"Block", "Apteka"},
+                            //new String[] {"Esenin", "Cherniy Chelovek"}
+                    );
+        }
+
 
     }
+}
 
