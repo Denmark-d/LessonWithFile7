@@ -67,7 +67,7 @@ public class FileParsingTest {
 
     @Test
     void zipTest1() throws Exception {
-        ZipFile zipFile = new ZipFile("/Users/daniiaadiiakova/IdeaProjects/LessonWithFile7/src/test/resources/files/test.zip");
+        ZipFile zipFile = new ZipFile("src/test/resources/files/test.zip");
         // Проверка csv
             ZipEntry csvEntry = zipFile.getEntry("11.csv");
             try (InputStream stream = cl.getResourceAsStream("files/11.csv")) {
@@ -90,7 +90,7 @@ public class FileParsingTest {
 
     @Test
     void zipTest2() throws Exception {
-        ZipFile zipFile = new ZipFile("/Users/daniiaadiiakova/IdeaProjects/LessonWithFile7/src/test/resources/files/Архив.zip");
+        ZipFile zipFile = new ZipFile("src/test/resources/files/Архив.zip");
 
         //Проверка pdf
         ZipEntry pdfEntry = zipFile.getEntry("Setter.pdf");
