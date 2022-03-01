@@ -19,13 +19,13 @@ public class CreateZipFile {
             try
             {
                 //path of the file that we want to compress
-                String fileName = "/Users/daniiaadiiakova/IdeaProjects/LessonWithFile7/src/test/resources/files/11.csv";
+                String fileName = "src/test/resources/files/11.csv";
                 File file = new File(fileName);
                 FileInputStream fis = new FileInputStream(file);
                 bis = new BufferedInputStream(fis, BUFFER);
                 //creating ZipOutputStream
                 //creates a zip file with the specified name
-                FileOutputStream fos = new FileOutputStream("/Users/daniiaadiiakova/IdeaProjects/LessonWithFile7/src/test/resources/files/test.zip");
+                FileOutputStream fos = new FileOutputStream("src/test/resources/files/test1.zip");
 //ZipOutputStream writes data to an output stream in zip format
                 zos = new ZipOutputStream(fos);
                 // ZipEntry, here file name can be created using the source file
